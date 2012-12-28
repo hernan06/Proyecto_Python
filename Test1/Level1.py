@@ -6,7 +6,6 @@ Created on 24/12/2012
 import pygame
 
 class Level1():
-    roof = None
     button=None
     button_sound=None
     wall_r = None
@@ -17,7 +16,7 @@ class Level1():
     door_intern=None
     
 
-    def __init__(self, screen):
+    def __init__(self):
         self.createLevel()
         
                 
@@ -29,7 +28,6 @@ class Level1():
         return s1
     
     def update(self,screen):
-        screen.blit(self.roof.image, self.roof.rect)
         screen.blit(self.wall_u.image,self.wall_u.rect)
         screen.blit(self.door_intern.image,self.door_intern.rect)
         screen.blit(self.door_l.image,self.door_l.rect)
@@ -41,15 +39,14 @@ class Level1():
 
         
     def createLevel(self):
-        self.roof = self.createSprite(0, 0, "level1/techo.jpg")
-        self.wall_u = self.createSprite(0, self.roof.rect.bottom, "level1/pared_sup.jpg")
-        self.door_intern=self.createSprite(155,self.wall_u.rect.bottom,"level1/puerta_dentro.jpg")
-        self.door_l = self.createSprite(155, self.wall_u.rect.bottom, "level1/puerta_izq.jpg")
-        self.door_r = self.createSprite(self.door_l.rect.right, self.wall_u.rect.bottom, "level1/puerta_der.jpg")
+        self.wall_u = self.createSprite(0,0,"level1/pared_sup.jpg")
+        self.door_intern=self.createSprite(320,self.wall_u.rect.bottom,"level1/puerta_dentro.jpg")
+        self.door_l = self.createSprite(320, self.wall_u.rect.bottom, "level1/puerta_der.jpg")
+        self.door_r = self.createSprite(self.door_l.rect.right, self.wall_u.rect.bottom, "level1/puerta_izq.jpg")
         self.wall_l = self.createSprite(0, self.wall_u.rect.bottom ,"level1/pared_izq.jpg")        
         self.wall_r = self.createSprite(self.door_r.rect.right, self.wall_u.rect.bottom, "level1/pared_der.jpg")
-        self.button=self.createSprite(400,350,"level1/boton.jpg")
-        self.button_sound=self.createSprite(0, self.roof.rect.bottom,"level1/sound.jpg")
+        self.button=self.createSprite(620,400,"level1/boton.jpg")
+        self.button_sound=self.createSprite(30,30,"level1/sound.jpg")
         
         
     def checkMoveDoor(self,vx,vy):

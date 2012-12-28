@@ -1,10 +1,10 @@
 '''
-Created on 24/12/2012
+Created on 28/12/2012
 
-@author: Keab
+@author: Hernan
 '''
 import pygame
-from Level1 import Level1
+from Level4 import Level4
 
 
 
@@ -14,8 +14,7 @@ def main():
     
     screen = pygame.display.set_mode((860,578))
     c1 = pygame.time.Clock()
-    l1 = Level1()
-    (x,y) = (0,0)
+    l4 = Level4()
     vx,vy=0,0
     sound1=pygame.mixer.Sound("level1/acertijo1.wav")
     pygame.mixer_music.load("level1/elevador.mp3")
@@ -26,20 +25,15 @@ def main():
                 quit()
             if events.type == pygame.MOUSEBUTTONDOWN:
                 x,y=pygame.mouse.get_pos()
-                if(l1.button.rect.collidepoint(x,y)):
+                if(x>=0):
                     pygame.mixer.music.play()
                     vx=-1
-                if(l1.button_sound.rect.collidepoint(x,y)):
-                    sound1.play()
                     
         
         c1.tick(60)
-        l1.checkMoveDoor(vx,vy)
+        l4.checkMoveDoor(vx,vy)
         screen.fill((200,200,200))
-        l1.update(screen)
+        l4.update(screen)
         pygame.display.update()
         pygame.display.flip()
 main()
-
-
-
