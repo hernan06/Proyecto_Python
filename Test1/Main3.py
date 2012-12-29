@@ -12,8 +12,8 @@ def main():
     
     pygame.init()
     
-    blanco=pygame.image.load("level3/circulo_blanco.jpg")
-    rojo=pygame.image.load("level3/circulo_rojo.jpg")
+    blanco=pygame.image.load("level3/circulo_blanco.png")
+    rojo=pygame.image.load("level3/circulo_rojo.png")
     patron=["0","0","0","0","0","0","0","0"]
     patron2=["0","0","0","0","0","0","0","0"]
     screen = pygame.display.set_mode((860,578))

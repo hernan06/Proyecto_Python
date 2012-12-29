@@ -32,7 +32,7 @@ class Level4():
         return s1
     
     def update(self,screen):
-        #screen.blit(self.door_intern.image,self.door_intern.rect)
+        screen.blit(self.door_intern.image,self.door_intern.rect)
         screen.blit(self.door_l.image,self.door_l.rect)
         screen.blit(self.door_r.image,self.door_r.rect)
         screen.blit(self.wall_l.image,self.wall_l.rect)
@@ -43,13 +43,14 @@ class Level4():
         screen.blit(self.hacha.image,self.hacha.rect)
         screen.blit(self.control.image,self.control.rect)
         screen.blit(self.button_sound.image,self.button_sound.rect)
+        screen.blit(self.panel.image,self.panel.rect)
         
         
     def createLevel(self):
         self.wall_u = self.createSprite(0,0,"level4/pared_sup.jpg")
         self.wall_l = self.createSprite(0, self.wall_u.rect.bottom ,"level4/pared_izq.jpg") 
         self.door_l = self.createSprite(self.wall_l.rect.right, self.wall_u.rect.bottom, "level4/puerta_izq.jpg")
-        #self.door_intern=self.createSprite(self.wall_l.rect.right,self.wall_u.rect.bottom,"level4/puerta_dentro.jpg")
+        self.door_intern=self.createSprite(self.wall_l.rect.right,self.wall_u.rect.bottom,"level4/puerta_dentro.jpg")
         self.door_r = self.createSprite(self.door_l.rect.right-2, self.wall_u.rect.bottom, "level4/puerta_der.jpg")
         self.wall_r = self.createSprite(self.door_r.rect.right-2, self.wall_u.rect.bottom, "level4/pared_der.jpg")
         self.floor=self.createSprite(0,self.wall_l.rect.bottom,"level4/floor.jpg")
@@ -57,7 +58,26 @@ class Level4():
         self.ventana=self.createSprite(50,110,"level4/ventana.jpg")
         self.control=self.createSprite(180,310,"level4/control.jpg")
         self.hacha=self.createSprite(700,200,"level4/hacha.png")
+        self.panel=self.createSprite(860,100,"level4/panel_numeros.jpg")
     
-    def checkMoveDoor(self,vx,vy):
-        self.door_l.rect.move_ip(vx,vy)
-        self.door_r.rect.move_ip(-vx,vy)
+    def checkMoveDoor(self,patron):
+        resolucion=["4","1","2","0","0","0","0","0"]
+        print patron[0:7]
+        if(patron[0:3]==resolucion[0:3]):
+            vx=-1
+            vy=0
+            self.door_l.rect.move_ip(vx,vy)
+            self.door_r.rect.move_ip(-vx,vy)
+        
+    def moverPanel(self,flag):
+        if(flag==1):
+            vx=-3
+            vy=0
+            if(self.panel.rect.left>=550):
+                self.panel.rect.move_ip(vx,vy)
+        else:
+            vx=3
+            vy=0
+            if(self.panel.rect.left<=860):
+                self.panel.rect.move_ip(vx,vy)
+        

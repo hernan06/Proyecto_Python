@@ -61,9 +61,9 @@ class Level3():
         num=0
         List=[]
         while (num<4):
-            c1=self.createSprite(x, y,"level3/circulo_blanco.jpg")
+            c1=self.createSprite(x, y,"level3/circulo_blanco.png")
             List.append(c1)
-            c2=self.createSprite(x+100, y,"level3/circulo_blanco.jpg")
+            c2=self.createSprite(x+100, y,"level3/circulo_blanco.png")
             List.append(c2)
             y=y+90
             num=num+1
