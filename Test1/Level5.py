@@ -49,8 +49,8 @@ class Level5():
         self.button_sound=self.createSprite(10,10,"level1/sound.jpg")
     
     def checkMoveDoor(self,patron):
-        solucion=["1","2","2","1"]
-        print patron[0:3]
+        solucion=["1","2","1","1","1","2"]
+        print patron[0:6]
         if(patron==solucion):
             vx=-1
             vy=0
