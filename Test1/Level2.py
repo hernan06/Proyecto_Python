@@ -61,7 +61,6 @@ class Level2():
         
     def checkMoveDoor(self,altura1,altura2):
         if(altura1>=180 and altura1<=224 and altura2>=375 and altura2<=424):
-            print "siiii"
             vx=-1
             vy=0
             self.door_l.rect.move_ip(vx,vy)
