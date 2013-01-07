@@ -4,7 +4,7 @@ Created on 27/12/2012
 @author: Hernan
 '''
 import pygame
-from compiler.ast import List
+pygame.init()
 
 
 class Level3():
@@ -18,6 +18,14 @@ class Level3():
     door_intern=None
     List1=[]
     List2=[]
+    fin=True
+    check=False
+    sound1=pygame.mixer.Sound("level3/acertijo3.wav")
+    pygame.mixer_music.load("level1/elevador.mp3")
+    blanco=pygame.image.load("level3/circulo_blanco.png")
+    rojo=pygame.image.load("level3/circulo_rojo.png")
+    patron=["0","0","0","0","0","0","0","0"]
+    patron2=["0","0","0","0","0","0","0","0"]
 
     def __init__(self):
         self.createLevel()
@@ -70,8 +78,6 @@ class Level3():
         return List
         
     def checkMoveDoor(self,patron,patron2):
-        #print patron[1:8]
-        #print patron2[1:8]
         resolucion1=["1","0","0","1","1","0","0","1"]
         resolucion2=["0","1","1","0","0","1","1","0"]
         if(patron==resolucion1 and patron2==resolucion2):
@@ -79,5 +85,51 @@ class Level3():
             vy=0
             self.door_l.rect.move_ip(vx,vy)
             self.door_r.rect.move_ip(-vx,vy)
+            self.check=True
 
             
+    def checking(self, screen):
+        c1 = pygame.time.Clock()
+        
+        while True and self.fin:
+            for events in pygame.event.get():
+                if events.type == pygame.QUIT:
+                    quit()
+                if events.type == pygame.MOUSEBUTTONDOWN:
+                    x,y=pygame.mouse.get_pos()
+                    if(self.button_sound.rect.collidepoint( x, y)):
+                        self.sound1.play()
+                    if(self.door_intern.rect.collidepoint(x,y) and self.check):
+                        self.fin=False
+                    for circle in self.List1:
+                        if(circle.rect.collidepoint(x,y)):
+                            i=self.List1.index(circle)
+                            print i
+                            if(circle.image==self.blanco):
+                                circle.image=self.rojo
+                                self.patron.pop(i)
+                                self.patron.insert(i,"1")
+                                print self.patron[0:8]
+                            else: 
+                                circle.image=self.blanco
+                                self.patron.pop(i)
+                                self.patron.insert(i,"0")
+                                print self.patron[0:8]
+                                
+                    for circle2 in self.List2:
+                        if(circle2.rect.collidepoint(x,y)):
+                            i= self.List2.index(circle2)
+                            if(circle2.image==self.blanco):
+                                circle2.image=self.rojo
+                                self.patron2.pop(i)
+                                self.patron2.insert(i,"1")
+                            else: 
+                                circle2.image=self.blanco
+                                self.patron2.pop(i)
+                                self.patron2.insert(i,"0")
+                        
+            c1.tick(60)
+            self.checkMoveDoor(self.patron,self.patron2)
+            screen.fill((200,200,200))
+            self.update(screen)
+            pygame.display.update()

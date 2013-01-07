@@ -4,7 +4,7 @@ Created on 03/01/2013
 @author: Hernan
 '''
 import pygame
-
+pygame.init()
 
 class Level8():
     button_sound=None
@@ -19,6 +19,14 @@ class Level8():
     lampara2=None
     lampara3=None
     lampara4=None
+    sound1=pygame.mixer.Sound("level8/acertijo8.wav")
+    pygame.mixer_music.load("level1/elevador.mp3")
+    lampara1select=False
+    lampara2select=False
+    lampara3select=False
+    lampara4select=False
+    fin=True
+    check=False
     
     def __init__(self):
         self.createLevel()
@@ -32,7 +40,7 @@ class Level8():
         return s1
     
     def update(self,screen):
-        #screen.blit(self.door_intern.image,self.door_intern.rect)
+        screen.blit(self.door_intern.image,self.door_intern.rect)
         screen.blit(self.door_l.image,self.door_l.rect)
         screen.blit(self.wall_l.image,self.wall_l.rect)
         screen.blit(self.wall_r.image,self.wall_r.rect)
@@ -48,7 +56,7 @@ class Level8():
         self.wall_u = self.createSprite(0,0,"level8/pared_sup.jpg")
         self.wall_l = self.createSprite(0, self.wall_u.rect.bottom ,"level8/pared_izq.jpg") 
         self.door_l = self.createSprite(self.wall_l.rect.right, self.wall_u.rect.bottom, "level8/puerta.jpg")
-        #self.door_intern=self.createSprite(self.wall_l.rect.right,self.wall_u.rect.bottom,"level5/puerta_dentro.jpg")
+        self.door_intern=self.createSprite(self.wall_l.rect.right,self.wall_u.rect.bottom,"level8/puerta_dentro.jpg")
         self.wall_r = self.createSprite(self.door_l.rect.right-3, self.wall_u.rect.bottom-3, "level8/pared_der.jpg")
         self.floor=self.createSprite(0,self.wall_l.rect.bottom-4,"level8/floor.jpg")
         self.button_sound=self.createSprite(10,10,"level1/sound.jpg")
@@ -90,3 +98,62 @@ class Level8():
             vx=-1
             vy=0
             self.door_l.rect.move_ip(vx,vy)
+            self.check=True
+            
+    def checking(self,screen):
+        c1 = pygame.time.Clock()
+        while True and self.fin:
+            for events in pygame.event.get():
+                if events.type == pygame.QUIT:
+                    quit()
+                if events.type == pygame.MOUSEBUTTONDOWN:
+                    x,y=pygame.mouse.get_pos()
+                    if(self.button_sound.rect.collidepoint( x, y)):
+                        self.sound1.play()
+                    if(self.door_intern.rect.collidepoint(x,y) and self.check):
+                        self.fin=False
+                    if(self.lampara1.rect.collidepoint(x,y)):
+                        if(self.lampara1select):
+                            self.lampara1select=False
+                        else:
+                            self.lampara1select=True
+                    if(self.lampara2.rect.collidepoint(x,y)):
+                        if(self.lampara2select):
+                            self.lampara2select=False
+                        else:
+                            self.lampara2select=True
+                    if(self.lampara3.rect.collidepoint(x,y)):
+                        if(self.lampara3select):
+                            self.lampara3select=False
+                        else:
+                            self.lampara3select=True
+                    if(self.lampara4.rect.collidepoint(x,y)):
+                        if(self.lampara4select):
+                            self.lampara4select=False
+                        else:
+                            self.lampara4select=True
+            c1.tick(60)
+            x,y=pygame.mouse.get_pos()
+            y=y+30
+            if(self.lampara1select and self.lampara1.rect.top<0):
+                self.lampara1.rect.bottom=y
+            if(self.lampara1.rect.top>=0):
+                self.lampara1.rect.top=-2
+            if(self.lampara2select and self.lampara2.rect.top<0):
+                self.lampara2.rect.bottom=y
+            if(self.lampara2.rect.top>=0):
+                self.lampara2.rect.top=-2
+            if(self.lampara3select and self.lampara3.rect.top<0):
+                self.lampara3.rect.bottom=y
+            if(self.lampara3.rect.top>=0):
+                self.lampara3.rect.top=-2
+            if(self.lampara4select and self.lampara4.rect.top<0):
+                self.lampara4.rect.bottom=y
+            if(self.lampara4.rect.top>=0):
+                self.lampara4.rect.top=-2
+            solucion=self.checkLamparas(self.lampara1.rect.bottom,self.lampara2.rect.bottom,self.lampara3.rect.bottom,self.lampara4.rect.bottom)
+            self.checkMoveDoor(solucion)
+            screen.fill((200,200,200))
+            self.update(screen)
+            pygame.display.update()
+            pygame.display.flip()

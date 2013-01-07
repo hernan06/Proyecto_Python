@@ -1,9 +1,10 @@
 '''
 Created on 28/12/2012
 
-@author: Hernan
+@author: Keab
 '''
 import pygame
+pygame.init()
 
 
 class Level4():
@@ -19,6 +20,15 @@ class Level4():
     panel= None
     hacha= None
     ventana= None
+    hachaSeleccionada=False
+    ventana_quebrada=pygame.image.load("level4/ventana_quebrada.jpg")
+    patron=["0","0","0","0","0","0","0","0"]
+    sound1=pygame.mixer.Sound("level4/acertijo4.wav")
+    pygame.mixer_music.load("level1/elevador.mp3")
+    flag=0
+    i=0
+    fin=True
+    check=False
     
     def __init__(self):
         self.createLevel()
@@ -68,6 +78,7 @@ class Level4():
             vy=0
             self.door_l.rect.move_ip(vx,vy)
             self.door_r.rect.move_ip(-vx,vy)
+            self.check=True
         
     def moverPanel(self,flag):
         if(flag==1):
@@ -81,3 +92,90 @@ class Level4():
             if(self.panel.rect.left<=860):
                 self.panel.rect.move_ip(vx,vy)
         
+    def checking(self, screen ):
+        c1 = pygame.time.Clock()
+        while True and self.fin:
+            for events in pygame.event.get():
+                if events.type == pygame.QUIT:
+                    quit()
+                if events.type == pygame.KEYDOWN:
+                    if(self.flag==1 and events.key == pygame.K_1):
+                        self.patron.pop(self.i)
+                        self.patron.insert(self.i,"1")
+                        if(self.i<7):
+                            self.i=self.i+1
+                    if(self.flag==1 and events.key == pygame.K_2):
+                        self.patron.pop(self.i)
+                        self.patron.insert(self.i,"2")
+                        if(self.i<7):
+                            self.i=self.i+1
+                    if(self.flag==1 and events.key == pygame.K_3):
+                        self.patron.pop(self.i)
+                        self.patron.insert(self.i,"3")
+                        if(self.i<7):
+                            self.i=self.i+1
+                    if(self.flag==1 and events.key == pygame.K_4):
+                        self.patron.pop(self.i)
+                        self.patron.insert(self.i,"4")
+                        if(self.i<7):
+                            self.i=self.i+1
+                    if(self.flag==1 and events.key == pygame.K_5):
+                        self.patron.pop(self.i)
+                        self.patron.insert(self.i,"5")
+                        if(self.i<7):
+                            self.i=self.i+1
+                    if(self.flag==1 and events.key == pygame.K_6):
+                        self.patron.pop(self.i)
+                        self.patron.insert(self.i,"6")
+                        if(self.i<7):
+                            self.i=self.i+1
+                    if(self.flag==1 and events.key == pygame.K_7):
+                        self.patron.pop(self.i)
+                        self.patron.insert(self.i,"7")
+                        if(self.i<7):
+                            self.i=self.i+1
+                    if(self.flag==1 and events.key == pygame.K_8):
+                        self.patron.pop(self.i)
+                        self.patron.insert(self.i,"8")
+                        if(self.i<7):
+                            self.i=self.i+1
+                    if(self.flag==1 and events.key == pygame.K_9):
+                        self.patron.pop(self.i)
+                        self.patron.insert(self.i,"9") 
+                        if(self.i<7):
+                            self.i=self.i+1   
+                if events.type == pygame.MOUSEBUTTONDOWN:
+                    x,y=pygame.mouse.get_pos()
+                    if(self.button_sound.rect.collidepoint( x, y)):
+                        self.sound1.play()
+                    if(self.control.rect.collidepoint(x,y)):
+                        if(self.flag==0):
+                            self.flag=1
+                        else: 
+                            self.flag=0
+                            patron=["0","0","0","0","0","0","0","0"]
+                            self.i=0
+                    if(self.hacha.rect.collidepoint(x,y)):
+                        if(self.hachaSeleccionada  and self.hacha.rect.colliderect(self.ventana)):
+                            self.hachaSeleccionada=True
+                            self.ventana.image=self.ventana_quebrada
+                        else: 
+                            if(self.hachaSeleccionada  and not(self.hacha.rect.colliderect(self.ventana))):
+                                self.hachaSeleccionada=False
+                            else:
+                                self.hachaSeleccionada=True
+                    if(self.door_intern.rect.collidepoint(x,y) and self.check):
+                        self.fin=False
+                    
+            c1.tick(60)
+            if(self.hachaSeleccionada):
+                x,y=pygame.mouse.get_pos()
+                x=x-25
+                y=y-25
+                self.hacha.rect.left,self.hacha.rect.top=x,y
+            
+            self.checkMoveDoor(self.patron)
+            self.moverPanel(self.flag)
+            screen.fill((200,200,200))
+            self.update(screen)
+            pygame.display.update()            

@@ -4,6 +4,7 @@ Created on 24/12/2012
 @author: Keab
 '''
 import pygame
+pygame.init()
 
 class Level1():
     button=None
@@ -14,6 +15,11 @@ class Level1():
     door_l = None
     door_r = None
     door_intern=None
+    fin=True
+    check=False
+    sound1=pygame.mixer.Sound("level1/acertijo1.wav")
+    pygame.mixer_music.load("level1/elevador.mp3")
+    (vx,vy)=(0,0)
     
 
     def __init__(self):
@@ -52,5 +58,29 @@ class Level1():
     def checkMoveDoor(self,vx,vy):
         self.door_l.rect.move_ip(vx,vy)
         self.door_r.rect.move_ip(-vx,vy)
-
+        self.check=True
+        
+        
+    def checking(self, screen):
+        c1 = pygame.time.Clock()
+        while (True and self.fin):
+            (x,y) = (0,0)
+            for events in pygame.event.get():
+                if events.type == pygame.QUIT:
+                    quit()
+                if events.type == pygame.MOUSEBUTTONDOWN:
+                    (x ,y) = pygame.mouse.get_pos()
+                if(self.button.rect.collidepoint( x, y)):
+                    pygame.mixer.music.play()
+                    self.vx=-1
+                if(self.button_sound.rect.collidepoint( x, y)):
+                    self.sound1.play()
+                if(self.door_intern.rect.collidepoint(x,y) and self.check):
+                    self.fin=False
+                
+            c1.tick(60)
+            self.checkMoveDoor(self.vx,self.vy)
+            screen.fill((200,200,200))
+            self.update(screen)
+            pygame.display.update()
             
