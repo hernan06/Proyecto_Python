@@ -3,8 +3,11 @@ Created on 24/12/2012
 
 @author: Hernan
 '''
+#Todos los levels son creados como clases donde son incializados todos sus recursos
+#Debido a esto se importan cada clase de su respectivo level
+
 import pygame
-from Level1 import Level1
+from Level1 import Level1 
 from Level2 import Level2
 from Level3 import Level3
 from Level4 import Level4
@@ -15,7 +18,7 @@ from Level8 import Level8
 from Portada import Portada
 
 def main():
-    
+    #Caracteristicas de la Ventana
     pygame.init()
     icon=pygame.image.load("icon.png")
     screen = pygame.display.set_mode((860,578))
@@ -42,7 +45,6 @@ def main():
     l6.checking(screen)
     l7.checking(screen)
     l8.checking(screen)
-        
         
     
 main()

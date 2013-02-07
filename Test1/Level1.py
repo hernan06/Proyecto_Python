@@ -6,6 +6,7 @@ Created on 24/12/2012
 import pygame
 pygame.init()
 
+#Primer Nivel.-  
 class Level1():
     button=None
     button_sound=None
@@ -17,11 +18,12 @@ class Level1():
     door_intern=None
     fin=True
     check=False
+    #inicializamos los sonidos del acertijo
     sound1=pygame.mixer.Sound("level1/acertijo1.wav")
     pygame.mixer_music.load("level1/elevador.mp3")
     (vx,vy)=(0,0)
     
-
+	#metodo constructor
     def __init__(self):
         self.createLevel()
         
@@ -32,7 +34,8 @@ class Level1():
         s1.rect = s1.image.get_rect()
         (s1.rect.left, s1.rect.top) = (x,y)
         return s1
-    
+    	
+	#Actualizacion de todos los elementos del Nivel
     def update(self,screen):
         screen.blit(self.wall_u.image,self.wall_u.rect)
         screen.blit(self.door_intern.image,self.door_intern.rect)
@@ -43,7 +46,7 @@ class Level1():
         screen.blit(self.button.image,self.button.rect)
         screen.blit(self.button_sound.image,self.button_sound.rect)
 
-        
+        #Cargamos todos los elementos del Nivel
     def createLevel(self):
         self.wall_u = self.createSprite(0,0,"level1/pared_sup.jpg")
         self.door_intern=self.createSprite(320,self.wall_u.rect.bottom,"level1/puerta_dentro.jpg")
@@ -54,7 +57,7 @@ class Level1():
         self.button=self.createSprite(620,400,"level1/boton.jpg")
         self.button_sound=self.createSprite(30,30,"level1/sound.jpg")
         
-        
+        #Se controla la Solucion del Nivel
     def checkMoveDoor(self,vx,vy):
         self.door_l.rect.move_ip(vx,vy)
         self.door_r.rect.move_ip(-vx,vy)

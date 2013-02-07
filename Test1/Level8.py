@@ -6,6 +6,8 @@ Created on 03/01/2013
 import pygame
 pygame.init()
 
+
+#Octavo Nivel.- 
 class Level8():
     button_sound=None
     wall_r = None
@@ -28,6 +30,7 @@ class Level8():
     fin=True
     check=False
     
+	#metodo constructor
     def __init__(self):
         self.createLevel()
         
@@ -39,6 +42,7 @@ class Level8():
         (s1.rect.left, s1.rect.top) = (x,y)
         return s1
     
+	#Actualizacion de todos los elementos del Nivel
     def update(self,screen):
         screen.blit(self.door_intern.image,self.door_intern.rect)
         screen.blit(self.door_l.image,self.door_l.rect)
@@ -52,6 +56,8 @@ class Level8():
         screen.blit(self.lampara3.image,self.lampara3.rect)
         screen.blit(self.lampara4.image,self.lampara4.rect)
         
+	
+        #Cargamos todos los elementos del Nivel
     def createLevel(self):
         self.wall_u = self.createSprite(0,0,"level8/pared_sup.jpg")
         self.wall_l = self.createSprite(0, self.wall_u.rect.bottom ,"level8/pared_izq.jpg") 
@@ -65,6 +71,7 @@ class Level8():
         self.lampara3=self.createSprite(570,-180,"level8/lampara.png")
         self.lampara4=self.createSprite(690,-180,"level8/lampara.png")
     
+	#Se controla la Solucion del Nivel
     def checkLamparas(self,l1,l2,l3,l4):
         encendida=pygame.image.load("level8/lampara2.png")
         apagada=pygame.image.load("level8/lampara.png")
